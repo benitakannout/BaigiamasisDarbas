@@ -62,6 +62,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
                     break;
             }
         }
+        
         public static void VisiStudentaiTrimestras()
         {
             Console.WriteLine("Pasirinkite trimestra:");
@@ -104,7 +105,14 @@ namespace MyApp // Note: actual namespace depends on the project name.
             int trimestras = Convert.ToInt32(Console.ReadLine());
             var pazymiuRepo = new PazymiuRepozitorija();
             var pazymys = pazymiuRepo.RetrieveGrade(id, trimestras);
-            Console.WriteLine($"{pazymys.Trimestras} trimestro/metinis studento pazymys - {pazymys.Pazymys}");
+            if (pazymys.Trimestras != 4)
+            {
+                Console.WriteLine($"{pazymys.Trimestras} trimestro studento pazymys - {pazymys.Pazymys}");
+            }
+            else
+            {
+                Console.WriteLine($"Metinis studento pazymys - {pazymys.Pazymys}");
+            }
         }
     }
 }
