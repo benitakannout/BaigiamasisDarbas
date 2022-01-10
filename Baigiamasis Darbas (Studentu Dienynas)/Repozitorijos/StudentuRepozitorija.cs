@@ -33,6 +33,11 @@ namespace Baigiamasis_Darbas__Studentu_Dienynas_.Repozitorijos
             return studentas;
         }
 
+        public void AddNewStudent(int id, string vardas)
+        {
+            studentai.Add(new Studentai(id, vardas));
+        }
+
         public List<Studentai> Retrieve()
         {
             return studentai;

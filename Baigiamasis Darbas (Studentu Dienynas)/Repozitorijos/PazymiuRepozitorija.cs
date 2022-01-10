@@ -73,6 +73,7 @@ namespace Baigiamasis_Darbas__Studentu_Dienynas_.Repozitorijos
             var pazymys = pazymiai.FirstOrDefault(x => x.Id == id && x.Trimestras == trimestras);
             return pazymys;
         }
+
         public List<Pazymiai> RetrieveAllGradesForTerm(int trimestras)
         {
             var trimestroPazymiai = Retrieve();
@@ -88,6 +89,36 @@ namespace Baigiamasis_Darbas__Studentu_Dienynas_.Repozitorijos
         public List<Pazymiai> Retrieve()
         {
             return pazymiai;
+        }
+        public void AddGrade (int id, int trimestras, int pazymys)
+        {
+            pazymiai.Add(new Pazymiai(id, trimestras, pazymys));
+        }
+        public Pazymiai EditGradeTrimester (int id, int trimestras, int pazymys)
+        {
+            var pazymiai = Retrieve();
+            var pazymysRedaguoti = pazymiai.SingleOrDefault(x => x.Id == id && x.Trimestras == trimestras);
+            if (pazymysRedaguoti == null)
+            {
+                Console.WriteLine($"Pazymys pagal id {pazymysRedaguoti.Id} neegzistuoja");
+                return null;
+            }
+
+            pazymysRedaguoti.Trimestras = trimestras;
+            return pazymysRedaguoti;
+        }
+        public Pazymiai EditGrade(int id, int trimestras, int pazymys)
+        {
+            var pazymiai = Retrieve();
+            var pazymysRedaguoti = pazymiai.SingleOrDefault(x => x.Id == id && x.Trimestras == trimestras);
+            if (pazymysRedaguoti == null)
+            {
+                Console.WriteLine($"Pazymys pagal id {pazymysRedaguoti.Id} neegzistuoja");
+                return null;
+            }
+
+            pazymysRedaguoti.Pazymys = pazymys;
+            return pazymysRedaguoti;
         }
     }
 }
