@@ -14,7 +14,7 @@ namespace Baigiamasis_Darbas__Studentu_Dienynas_.Repozitorijos
             pazymiai.Add(new Pazymiai(1, 1, 7));
             pazymiai.Add(new Pazymiai(1, 2, 9));
             pazymiai.Add(new Pazymiai(1, 3, 7));
-            pazymiai.Add(new Pazymiai(1, 1, 8));
+            pazymiai.Add(new Pazymiai(1, 4, 8));
             pazymiai.Add(new Pazymiai(2, 1, 9));
             pazymiai.Add(new Pazymiai(2, 2, 8));
             pazymiai.Add(new Pazymiai(2, 3, 9));
@@ -72,6 +72,18 @@ namespace Baigiamasis_Darbas__Studentu_Dienynas_.Repozitorijos
         {
             var pazymys = pazymiai.FirstOrDefault(x => x.Id == id && x.Trimestras == trimestras);
             return pazymys;
+        }
+        public List<Pazymiai> RetrieveAllGradesForTerm(int trimestras)
+        {
+            var trimestroPazymiai = Retrieve();
+            trimestroPazymiai = trimestroPazymiai.Where(pazymys => pazymys.Trimestras.Equals(trimestras)).ToList();
+            return trimestroPazymiai;
+        }
+        public List<Pazymiai> RetrieveAllGradesForStudent(int id)
+        {
+            var studentoPazymiai = Retrieve();
+            studentoPazymiai = studentoPazymiai.Where(pazymys => pazymys.Id.Equals(id)).ToList();
+            return studentoPazymiai;
         }
         public List<Pazymiai> Retrieve()
         {
