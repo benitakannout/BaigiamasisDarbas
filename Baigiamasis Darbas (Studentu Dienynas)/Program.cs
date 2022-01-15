@@ -28,6 +28,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
                             break;
                         case 4:
                             RedaguotiStudentuSarasa();
+                            break;
                         default:
                             Console.WriteLine("Negalimas pasirinkimas");
                             break;
@@ -38,6 +39,59 @@ namespace MyApp // Note: actual namespace depends on the project name.
                     Console.WriteLine($"Ivyko klaida: {e.Message}");
                 }
             }
+        }
+
+        public static void RedaguotiStudentuSarasa()
+        {
+            Console.WriteLine("Pasirinkite veiksma:");
+            Console.WriteLine("1 - prideti studenta, 2 - istrinti studenta, 3 - keisti studento varda");
+            int pasirinkimas = Convert.ToInt32(Console.ReadLine());
+
+            switch (pasirinkimas)
+            {
+                case 1:
+                    PridetiStudenta();
+                    break;
+                case 2:
+                    IstrintiStudenta();
+                    break;
+                case 3:
+                    KeistiStudentoVarda();
+                    break;
+                default:
+                    Console.WriteLine("Negalimas pasirinkimas");
+                    break;
+            }
+        }
+
+        public static void PridetiStudenta()
+        {
+            Console.WriteLine("Iveskite studento ID:");
+            int id = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Iveskite studento varda:");
+            string vardas = Console.ReadLine();
+            var studentuRepo = new StudentuRepozitorija();
+            studentuRepo.AddNewStudent(id, vardas);
+        }
+
+        public static void IstrintiStudenta()
+        {
+            Console.WriteLine("Iveskite studento ID:");
+            int id = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Iveskite studento varda:");
+            string vardas = Console.ReadLine();
+            var studentuRepo = new StudentuRepozitorija();
+            studentuRepo.RemoveStudent(id, vardas);
+        }
+
+        public static void KeistiStudentoVarda()
+        {
+            Console.WriteLine("Iveskite studento ID:");
+            int id = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Iveskite studento varda:");
+            string vardas = Console.ReadLine();
+            var studentuRepo = new StudentuRepozitorija();
+            studentuRepo.EditStudent(id, vardas);
         }
 
         public static void PerziuretiStudentuSarasa()

@@ -42,5 +42,33 @@ namespace Baigiamasis_Darbas__Studentu_Dienynas_.Repozitorijos
         {
             return studentai;
         }
+
+        public void RemoveStudent(int id, string vardas)
+        {
+            var studentai = Retrieve();
+            var studentasIstrinti = studentai.SingleOrDefault(x => x.ID == id && x.Vardas == vardas);
+            if (studentasIstrinti != null)
+            {
+                studentai.Remove(studentasIstrinti);
+            }
+            else
+            {
+                Console.WriteLine($"Studentas pagal id {studentasIstrinti.ID} neegzistuoja");
+            }
+        }
+
+        public Studentai EditStudent(int id, string vardas)
+        {
+            var studentai = Retrieve();
+            var studentasRedaguoti = studentai.SingleOrDefault(x => x.ID == id);
+            if (studentasRedaguoti == null)
+            {
+                Console.WriteLine($"Studentas pagal id {studentasRedaguoti.ID} neegzistuoja");
+                return null;
+            }
+
+            studentasRedaguoti.Vardas = vardas;
+            return studentasRedaguoti;
+        }
     }
 }
