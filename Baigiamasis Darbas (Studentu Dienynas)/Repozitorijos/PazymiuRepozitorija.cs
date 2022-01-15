@@ -94,19 +94,21 @@ namespace Baigiamasis_Darbas__Studentu_Dienynas_.Repozitorijos
         {
             pazymiai.Add(new Pazymiai(id, trimestras, pazymys));
         }
-        public Pazymiai EditGradeTrimester (int id, int trimestras, int pazymys)
+
+        public void RemoveGrade (int id, int trimestras)
         {
             var pazymiai = Retrieve();
-            var pazymysRedaguoti = pazymiai.SingleOrDefault(x => x.Id == id && x.Trimestras == trimestras);
-            if (pazymysRedaguoti == null)
+            var pazymysIstrinti = pazymiai.SingleOrDefault(x => x.Id == id && x.Trimestras == trimestras);
+            if (pazymysIstrinti != null)
             {
-                Console.WriteLine($"Pazymys pagal id {pazymysRedaguoti.Id} neegzistuoja");
-                return null;
+                pazymiai.Remove(pazymysIstrinti);
             }
-
-            pazymysRedaguoti.Trimestras = trimestras;
-            return pazymysRedaguoti;
+            else
+            {
+                Console.WriteLine($"Pazymys pagal id {pazymysIstrinti.Id} neegzistuoja");
+            }
         }
+
         public Pazymiai EditGrade(int id, int trimestras, int pazymys)
         {
             var pazymiai = Retrieve();

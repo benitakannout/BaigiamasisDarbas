@@ -62,7 +62,64 @@ namespace MyApp // Note: actual namespace depends on the project name.
                     break;
             }
         }
-        
+
+        public static void RedaguotiPazymiusMeniu()
+        {
+            Console.WriteLine("Pasirinkite ka norite redaguoti:");
+            Console.WriteLine("1 - redaguoti pazymi, 2 - prideti pazymi, 3 - istrinti pazymi");
+            int pasirinkimas = Convert.ToInt32(Console.ReadLine());
+
+            switch (pasirinkimas)
+            {
+                case 1:
+                    RedaguotiPazymi();
+                    break;
+                case 2:
+                    PridetiPazymi();
+                    break;
+                case 3:
+                    IstrintiPazymi();
+                    break;
+                default:
+                    Console.WriteLine("Negalimas pasirinkimas");
+                    break;
+            }
+        }
+
+        public static void RedaguotiPazymi()
+        {
+            Console.WriteLine("Iveskite studento ID:");
+            int id = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Iveskite pazymio trimestro numeri (4 - metinis pazymys):");
+            int trimestras = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Iveskite nauja pazymi:");
+            int pazymys = Convert.ToInt32(Console.ReadLine());
+            var pazymiuRepo = new PazymiuRepozitorija();
+            pazymiuRepo.EditGrade(id, trimestras, pazymys);
+        }
+
+        public static void PridetiPazymi()
+        {
+            Console.WriteLine("Iveskite studento ID:");
+            int id = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Iveskite pazymio trimestro numeri (4 - metinis pazymys):");
+            int trimestras = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Iveskite pazymi, kuri norite prideti:");
+            int pazymys = Convert.ToInt32(Console.ReadLine());
+            var pazymiuRepo = new PazymiuRepozitorija();
+            pazymiuRepo.AddGrade(id, trimestras, pazymys);
+        }
+
+        public static void IstrintiPazymi()
+        {
+            Console.WriteLine("Iveskite studento ID:");
+            int id = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Iveskite trinamo pazymio trimestro numeri (4 - metinis pazymys):");
+            int trimestras = Convert.ToInt32(Console.ReadLine());
+            var pazymiuRepo = new PazymiuRepozitorija();
+            pazymiuRepo.RemoveGrade(id, trimestras);
+        }
+
         public static void VisiStudentaiTrimestras()
         {
             Console.WriteLine("Pasirinkite trimestra:");
