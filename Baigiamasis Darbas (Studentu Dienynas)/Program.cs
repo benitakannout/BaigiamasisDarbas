@@ -12,7 +12,6 @@ namespace MyApp // Note: actual namespace depends on the project name.
             {
                 try
                 {
-
                     Console.WriteLine("1 - perziureti pazymius, 2 - redaguoti pazymius, 3 - perziureti studentu sarasa, 4 - redaguoti studentu sarasa");
                     int pasirinkimas = Convert.ToInt32(Console.ReadLine());
                     switch (pasirinkimas)
