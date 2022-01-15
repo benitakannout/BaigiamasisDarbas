@@ -40,6 +40,16 @@ namespace MyApp // Note: actual namespace depends on the project name.
             }
         }
 
+        public static void PerziuretiStudentuSarasa()
+        {
+            var studentuRepo = new StudentuRepozitorija();
+            var visiStudentai = studentuRepo.Retrieve();
+            foreach (var studentas in visiStudentai)
+            {
+                Console.WriteLine($"Studento ID - {studentas.ID}, studento vardas - {studentas.Vardas}");
+            }
+        }
+
         public static void PerziuretiPazymiusMeniu()
         {
             Console.WriteLine("Pasirinkite ka norite perziureti:");
