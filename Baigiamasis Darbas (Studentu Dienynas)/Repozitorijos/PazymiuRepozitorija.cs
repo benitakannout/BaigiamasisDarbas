@@ -90,9 +90,10 @@ namespace Baigiamasis_Darbas__Studentu_Dienynas_.Repozitorijos
         {
             return pazymiai;
         }
-        public void AddGrade (int id, int trimestras, int pazymys)
+        public List<Pazymiai> AddGrade (int id, int trimestras, int pazymys)
         {
             pazymiai.Add(new Pazymiai(id, trimestras, pazymys));
+            return pazymiai;
         }
 
         public void RemoveGrade (int id, int trimestras)

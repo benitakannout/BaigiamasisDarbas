@@ -33,9 +33,11 @@ namespace Baigiamasis_Darbas__Studentu_Dienynas_.Repozitorijos
             return studentas;
         }
 
-        public void AddNewStudent(int id, string vardas)
+        public List<Studentai> AddNewStudent(string vardas)
         {
+            int id = studentai.Count + 1;
             studentai.Add(new Studentai(id, vardas));
+            return studentai;
         }
 
         public List<Studentai> Retrieve()
@@ -43,17 +45,17 @@ namespace Baigiamasis_Darbas__Studentu_Dienynas_.Repozitorijos
             return studentai;
         }
 
-        public void RemoveStudent(int id, string vardas)
+        public void RemoveStudent(string vardas)
         {
             var studentai = Retrieve();
-            var studentasIstrinti = studentai.SingleOrDefault(x => x.ID == id && x.Vardas == vardas);
+            var studentasIstrinti = studentai.SingleOrDefault(x => x.Vardas == vardas);
             if (studentasIstrinti != null)
             {
                 studentai.Remove(studentasIstrinti);
             }
             else
             {
-                Console.WriteLine($"Studentas pagal id {studentasIstrinti.ID} neegzistuoja");
+                Console.WriteLine($"Studentas vardu {studentasIstrinti.Vardas} neegzistuoja");
             }
         }
 

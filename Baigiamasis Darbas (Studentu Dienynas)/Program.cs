@@ -8,6 +8,9 @@ namespace MyApp // Note: actual namespace depends on the project name.
     {
         static void Main(string[] args)
         {
+            var studentuRepo = new StudentuRepozitorija();
+            var pazymiuRepo = new PazymiuRepozitorija();
+
             while (true)
             {
                 try
@@ -17,16 +20,16 @@ namespace MyApp // Note: actual namespace depends on the project name.
                     switch (pasirinkimas)
                     {
                         case 1:
-                            PerziuretiPazymiusMeniu();
+                            PerziuretiPazymiusMeniu(pazymiuRepo);
                             break;
                         case 2:
-                            RedaguotiPazymiusMeniu();
+                            RedaguotiPazymiusMeniu(pazymiuRepo);
                             break;
                         case 3:
-                            PerziuretiStudentuSarasa();
+                            PerziuretiStudentuSarasa(studentuRepo);
                             break;
                         case 4:
-                            RedaguotiStudentuSarasa();
+                            RedaguotiStudentuSarasa(studentuRepo);
                             break;
                         default:
                             Console.WriteLine("Negalimas pasirinkimas");
@@ -40,7 +43,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
             }
         }
 
-        public static void RedaguotiStudentuSarasa()
+        public static void RedaguotiStudentuSarasa(StudentuRepozitorija studentuRepozitorija)
         {
             Console.WriteLine("Pasirinkite veiksma:");
             Console.WriteLine("1 - prideti studenta, 2 - istrinti studenta, 3 - keisti studento varda");
@@ -49,13 +52,13 @@ namespace MyApp // Note: actual namespace depends on the project name.
             switch (pasirinkimas)
             {
                 case 1:
-                    PridetiStudenta();
+                    PridetiStudenta(studentuRepozitorija);
                     break;
                 case 2:
-                    IstrintiStudenta();
+                    IstrintiStudenta(studentuRepozitorija);
                     break;
                 case 3:
-                    KeistiStudentoVarda();
+                    KeistiStudentoVarda(studentuRepozitorija);
                     break;
                 default:
                     Console.WriteLine("Negalimas pasirinkimas");
@@ -63,47 +66,45 @@ namespace MyApp // Note: actual namespace depends on the project name.
             }
         }
 
-        public static void PridetiStudenta()
+        public static List<Studentai> PridetiStudenta(StudentuRepozitorija studentuRepozitorija)
+        {
+            Console.WriteLine("Iveskite studento varda:");
+            string vardas = Console.ReadLine();
+            studentuRepozitorija.AddNewStudent(vardas);
+            var studentai = studentuRepozitorija.Retrieve();
+            return studentai;
+        }
+
+        public static List<Studentai> IstrintiStudenta(StudentuRepozitorija studentuRepozitorija)
+        {
+            Console.WriteLine("Iveskite studento varda:");
+            string vardas = Console.ReadLine();
+            studentuRepozitorija.RemoveStudent(vardas);
+            var studentai = studentuRepozitorija.Retrieve();
+            return studentai;
+        }
+
+        public static List<Studentai> KeistiStudentoVarda(StudentuRepozitorija studentuRepozitorija)
         {
             Console.WriteLine("Iveskite studento ID:");
             int id = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Iveskite studento varda:");
+            Console.WriteLine("Iveskite varda:");
             string vardas = Console.ReadLine();
-            var studentuRepo = new StudentuRepozitorija();
-            studentuRepo.AddNewStudent(id, vardas);
+            studentuRepozitorija.EditStudent(id, vardas);
+            var studentai = studentuRepozitorija.Retrieve();
+            return studentai;
         }
 
-        public static void IstrintiStudenta()
+        public static void PerziuretiStudentuSarasa(StudentuRepozitorija studentuRepozitorija)
         {
-            Console.WriteLine("Iveskite studento ID:");
-            int id = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Iveskite studento varda:");
-            string vardas = Console.ReadLine();
-            var studentuRepo = new StudentuRepozitorija();
-            studentuRepo.RemoveStudent(id, vardas);
-        }
-
-        public static void KeistiStudentoVarda()
-        {
-            Console.WriteLine("Iveskite studento ID:");
-            int id = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Iveskite studento varda:");
-            string vardas = Console.ReadLine();
-            var studentuRepo = new StudentuRepozitorija();
-            studentuRepo.EditStudent(id, vardas);
-        }
-
-        public static void PerziuretiStudentuSarasa()
-        {
-            var studentuRepo = new StudentuRepozitorija();
-            var visiStudentai = studentuRepo.Retrieve();
+            var visiStudentai = studentuRepozitorija.Retrieve();
             foreach (var studentas in visiStudentai)
             {
                 Console.WriteLine($"Studento ID - {studentas.ID}, studento vardas - {studentas.Vardas}");
             }
         }
 
-        public static void PerziuretiPazymiusMeniu()
+        public static void PerziuretiPazymiusMeniu(PazymiuRepozitorija pazymiuRepozitorija)
         {
             Console.WriteLine("Pasirinkite ka norite perziureti:");
             Console.WriteLine("1 - visu studentu trimestro pazymiai, 2 - visi vieno studento pazymiai, 3 - studento vieno trimestro pazymys");
@@ -112,13 +113,13 @@ namespace MyApp // Note: actual namespace depends on the project name.
             switch (pasirinkimas)
             {
                 case 1:
-                    VisiStudentaiTrimestras();
+                    VisiStudentaiTrimestras(pazymiuRepozitorija);
                     break;
                 case 2:
-                    VienoStudentoPazymiai();
+                    VienoStudentoPazymiai(pazymiuRepozitorija);
                     break;
                 case 3:
-                    VienasPazymys();
+                    VienasPazymys(pazymiuRepozitorija);
                     break;
                 default:
                     Console.WriteLine("Negalimas pasirinkimas");
@@ -126,7 +127,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
             }
         }
 
-        public static void RedaguotiPazymiusMeniu()
+        public static void RedaguotiPazymiusMeniu(PazymiuRepozitorija pazymiuRepozitorija)
         {
             Console.WriteLine("Pasirinkite ka norite redaguoti:");
             Console.WriteLine("1 - redaguoti pazymi, 2 - prideti pazymi, 3 - istrinti pazymi");
@@ -135,13 +136,13 @@ namespace MyApp // Note: actual namespace depends on the project name.
             switch (pasirinkimas)
             {
                 case 1:
-                    RedaguotiPazymi();
+                    RedaguotiPazymi(pazymiuRepozitorija);
                     break;
                 case 2:
-                    PridetiPazymi();
+                    PridetiPazymi(pazymiuRepozitorija);
                     break;
                 case 3:
-                    IstrintiPazymi();
+                    IstrintiPazymi(pazymiuRepozitorija);
                     break;
                 default:
                     Console.WriteLine("Negalimas pasirinkimas");
@@ -149,7 +150,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
             }
         }
 
-        public static void RedaguotiPazymi()
+        public static List<Pazymiai> RedaguotiPazymi(PazymiuRepozitorija pazymiuRepozitorija)
         {
             Console.WriteLine("Iveskite studento ID:");
             int id = Convert.ToInt32(Console.ReadLine());
@@ -157,11 +158,12 @@ namespace MyApp // Note: actual namespace depends on the project name.
             int trimestras = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Iveskite nauja pazymi:");
             int pazymys = Convert.ToInt32(Console.ReadLine());
-            var pazymiuRepo = new PazymiuRepozitorija();
-            pazymiuRepo.EditGrade(id, trimestras, pazymys);
+            pazymiuRepozitorija.EditGrade(id, trimestras, pazymys);
+            var pazymiai = pazymiuRepozitorija.Retrieve();
+            return pazymiai;
         }
 
-        public static void PridetiPazymi()
+        public static List<Pazymiai> PridetiPazymi(PazymiuRepozitorija pazymiuRepozitorija)
         {
             Console.WriteLine("Iveskite studento ID:");
             int id = Convert.ToInt32(Console.ReadLine());
@@ -169,27 +171,28 @@ namespace MyApp // Note: actual namespace depends on the project name.
             int trimestras = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Iveskite pazymi, kuri norite prideti:");
             int pazymys = Convert.ToInt32(Console.ReadLine());
-            var pazymiuRepo = new PazymiuRepozitorija();
-            pazymiuRepo.AddGrade(id, trimestras, pazymys);
+            pazymiuRepozitorija.AddGrade(id, trimestras, pazymys);
+            var pazymiai = pazymiuRepozitorija.Retrieve();
+            return pazymiai;
         }
 
-        public static void IstrintiPazymi()
+        public static List<Pazymiai> IstrintiPazymi(PazymiuRepozitorija pazymiuRepozitorija)
         {
             Console.WriteLine("Iveskite studento ID:");
             int id = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Iveskite trinamo pazymio trimestro numeri (4 - metinis pazymys):");
             int trimestras = Convert.ToInt32(Console.ReadLine());
-            var pazymiuRepo = new PazymiuRepozitorija();
-            pazymiuRepo.RemoveGrade(id, trimestras);
+            pazymiuRepozitorija.RemoveGrade(id, trimestras);
+            var pazymiai = pazymiuRepozitorija.Retrieve();
+            return pazymiai;
         }
 
-        public static void VisiStudentaiTrimestras()
+        public static void VisiStudentaiTrimestras(PazymiuRepozitorija pazymiuRepozitorija)
         {
             Console.WriteLine("Pasirinkite trimestra:");
             Console.WriteLine("1 - I trimestras, 2 - II trimestras, 3 - III trimestras, 4 - metiniai pazymiai");
             int trimestras = Convert.ToInt32(Console.ReadLine());
-            var pazymiuRepo = new PazymiuRepozitorija();
-            var pazymiaiPagalTrimestra = pazymiuRepo.RetrieveAllGradesForTerm(trimestras);
+            var pazymiaiPagalTrimestra = pazymiuRepozitorija.RetrieveAllGradesForTerm(trimestras);
 
             foreach(var pazymys in pazymiaiPagalTrimestra)
             {
@@ -197,12 +200,11 @@ namespace MyApp // Note: actual namespace depends on the project name.
             }
         }
 
-        public static void VienoStudentoPazymiai()
+        public static void VienoStudentoPazymiai(PazymiuRepozitorija pazymiuRepozitorija)
         {
             Console.WriteLine("Iveskite studento eiles numeri");
             int id = Convert.ToInt32(Console.ReadLine());
-            var pazymiuRepo = new PazymiuRepozitorija();
-            var pazymiaiPagalStudenta = pazymiuRepo.RetrieveAllGradesForStudent(id);
+            var pazymiaiPagalStudenta = pazymiuRepozitorija.RetrieveAllGradesForStudent(id);
 
             foreach (var pazymys in pazymiaiPagalStudenta)
             {
@@ -217,14 +219,13 @@ namespace MyApp // Note: actual namespace depends on the project name.
             }
         }
 
-        public static void VienasPazymys()
+        public static void VienasPazymys(PazymiuRepozitorija pazymiuRepozitorija)
         {
             Console.WriteLine("Iveskite studento eiles numeri:");
             int id = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Iveskite trimestra (1, 2, 3 trimestrai, 4 - metinis pazymys");
             int trimestras = Convert.ToInt32(Console.ReadLine());
-            var pazymiuRepo = new PazymiuRepozitorija();
-            var pazymys = pazymiuRepo.RetrieveGrade(id, trimestras);
+            var pazymys = pazymiuRepozitorija.RetrieveGrade(id, trimestras);
             if (pazymys.Trimestras != 4)
             {
                 Console.WriteLine($"{pazymys.Trimestras} trimestro studento pazymys - {pazymys.Pazymys}");
